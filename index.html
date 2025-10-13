@@ -9,16 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle:wght@700&family=Almarai:wght@700&display=swap" rel="stylesheet">
   <style>
     :root{
-      body {
-  font-weight: 700;
+  --neon:#27ff6a;
+  --text:#eaf1fb;
+  --muted:#9fb0c1;
+  --ring:rgba(39,255,106,.28);
+  --app-font: Poppins, system-ui, sans-serif;
 }
+body { font-weight: 700; } /* خليها برّه :root */
 
-      --neon:#27ff6a;
-      --text:#eaf1fb;
-      --muted:#9fb0c1;
-      --ring:rgba(39,255,106,.28);
-      --app-font: Poppins, system-ui, sans-serif;
-    }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family: var(--app-font);
@@ -310,9 +308,9 @@
 
   <footer>
     <div class="footer-links">
-      <a href="#" data-i18n="footer.privacy">PRIVACY POLICY</a>
-      <a href="#" data-i18n="footer.terms">TERMS OF USE</a>
-    </div>
+  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.privacy">PRIVACY POLICY</a>
+  <a href="/terms.html"   target="_blank" rel="noopener noreferrer" data-i18n="footer.terms">TERMS OF USE</a>
+</div>
     <p data-i18n="footer.copy">© 2025 Option AI Signals. All rights reserved.</p>
   </footer>
 
