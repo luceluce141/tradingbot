@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Option AI Signals — Start Earning Today</title>
+  <!-- English + Arabic fonts -->
+<link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle:wght@700&family=Almarai:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      body {
+  font-weight: 700;
+}
+
+      --neon:#27ff6a;
+      --text:#eaf1fb;
+      --muted:#9fb0c1;
+      --ring:rgba(39,255,106,.28);
+      --app-font: Poppins, system-ui, sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: var(--app-font);
+      color:var(--text);
+      background:#000;
+      overflow-x:hidden;
+    }
+
+    /* ===== HERO BACKGROUND ===== */
+    .hero{
+      position:relative;
+      width:100%;
+      min-height:clamp(560px, 92svh, 820px);
+      background:url('./hero.png') no-repeat center center / cover;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      isolation:isolate;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.45); /* أقوى على الموبايل لقراءة أفضل */
+      z-index:0;
+      pointer-events:none;
+      transition:background .2s ease;
+    }
+
+    .content{
+      position:relative;
+      z-index:1;
+      max-width:800px;
+      padding:1rem 2rem;
+      width:min(92vw,800px);
+      transform:translateY(60px); /* نزول خفيف للموبايل */
+    }
+
+    .eyebrow{
+      color:#9be7b1;
+      letter-spacing:.15em;
+      font-size:10px;
+      text-transform:uppercase;
+      font-weight:700;
+      margin-bottom:.6rem;
+    }
+
+    h1{
+      font-size:clamp(24px,4vw,46px);
+      line-height:1.15;
+      font-weight:900;
+      margin-bottom:.9rem;
+      text-shadow:0 0 20px #000;
+    }
+
+    /* ======= COUNTER: ثابت العرض + tabular-nums يمنع الرعشة ======= */
+    .counter-wrap{
+      display:inline-block;
+      min-width:7ch;             /* يتظبط نهائياً من السكريبت حسب الخانات */
+      text-align:right;
+      white-space:nowrap;
+      vertical-align:baseline;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1, "liga" 0;
+    }
+    #counter{
+      color:var(--neon);
+      font-weight:900;
+      text-shadow:0 0 15px var(--neon);
+      transition:all .3s ease;
+      display:inline-block;
+      letter-spacing:.02em;
+    }
+    .plus{ margin-left:0 }
+
+    /* أثناء العد */
+    .counting{
+      animation:glowPulse .5s ease-in-out infinite alternate;
+    }
+    @keyframes glowPulse{
+      from{ text-shadow:0 0 10px var(--neon),0 0 20px var(--neon); }
+      to{   text-shadow:0 0 20px var(--neon),0 0 35px var(--neon); }
+    }
+
+    .lead{
+      color:var(--muted);
+      font-size:clamp(13px,1.8vw,16px);
+      margin-bottom:1.1rem;
+    }
+
+    ul{list-style:none;margin:0 0 1.1rem 0;padding:0}
+    ul li{
+      margin:.35rem 0;
+      font-size:14px;
+      color:#dce6f2;
+    }
+    ul li::before{
+      content:"✔";
+      color:var(--neon);
+      margin-inline-end:8px;
+      font-weight:900;
+    }
+
+    .cta{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 22px;
+      border-radius:10px;
+      text-decoration:none;
+      background:linear-gradient(180deg,var(--neon),#20d85a);
+      color:#06140a;
+      font-weight:900;
+      font-size:15px;
+      box-shadow:0 16px 54px var(--ring);
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .cta::after{
+      content:"";
+      position:absolute;
+      top:0; left:-35%;
+      width:20%; height:100%;
+      background:linear-gradient(90deg,transparent,#ffffff88,transparent);
+      animation:shine 2.8s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes shine{to{transform:translateX(250%)}}
+
+    .sub{
+      margin-top:.6rem;
+      color:#c3d1e0;
+      font-size:11px;
+    }
+
+    .legal{
+      background:rgba(10,15,20,0.55);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:15px 14px;
+      margin-top:14px;
+      text-align:center;
+      font-size:12px;
+      line-height:1.5;
+      color:#175817;
+      box-shadow:0 0 18px rgba(0,0,0,0.4);
+      backdrop-filter:blur(4px);
+    }
+
+    footer{
+      text-align:center;
+      color:#8ea4be;
+      font-size:12px;
+      margin:18px 0 24px;
+    }
+    .footer-links{
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      font-size:12.5px;
+      margin-bottom:6px;
+    }
+    .footer-links a{
+      color:#eaeaea;
+      text-decoration:none;
+      transition:color .2s ease;
+    }
+    .footer-links a:hover{ color:var(--neon) }
+
+    /* ===== Desktop: نفس روح Dream (نص يسار، نزول بسيط) ===== */
+    @media (min-width: 1024px){
+      .hero{
+        background-position: right top;
+        background-size: contain;
+      }
+    }
+
+    /* Mobile fine-tune */
+    @media (max-width:768px){
+      h1{font-size:clamp(20px,6vw,34px)}
+      .lead{font-size:14px}
+      ul li{font-size:13px}
+      .cta{font-size:14px;padding:10px 20px}
+      .legal{font-size:11.5px;padding:9px 12px;margin-top:12px}
+      .footer-links{gap:18px;font-size:12px}
+    }
+
+    /* ===== Language switch (non-intrusive) ===== */
+    .lang-switch{
+      position:absolute;
+      top:14px;
+      inset-inline-end:14px;
+      z-index:2;
+      display:flex;
+      gap:6px;
+      background:rgba(0,0,0,.45);
+      padding:6px 8px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;
+      backdrop-filter: blur(6px);
+      font-size:12px;
+    }
+    .lang-switch button{
+      background:transparent;
+      border:none;
+      color:#eaeaea;
+      cursor:pointer;
+      padding:4px 8px;
+      border-radius:8px;
+      font-weight:700;
+    }
+    .lang-switch button.active{
+      background:rgba(39,255,106,.12);
+      color:var(--neon);
+    }
+
+    /* RTL helper */
+    .rtl .footer-links{flex-direction:row-reverse}
+  
+    /* ===== Single Icon Language Toggle ===== */
+    .lang-toggle{
+      position:absolute;
+      top:14px;
+      inset-inline-end:14px;
+      z-index:3;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.08);
+      padding:6px 10px;
+      border-radius:10px;
+      backdrop-filter: blur(6px);
+      cursor:pointer;
+      color:#eaeaea;
+      font-weight:800;
+      font-size:12px;
+      transition:background .2s, border-color .2s, transform .08s ease;
+    }
+    .lang-toggle:hover{ background:rgba(39,255,106,.12); border-color:rgba(39,255,106,.35); }
+    .lang-toggle:active{ transform:scale(.98); }
+    .lang-toggle img{ width:18px; height:18px; display:block; }
+    .lang-toggle .lang-abbrev{ letter-spacing:.08em; }
+
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <!-- Language Switcher -->
+    <button class="lang-toggle" type="button" aria-label="Toggle language" title="EN ⇄ AR">
+  <img src="translation.png" alt="Language" />
+  <span class="lang-abbrev">EN</span>
+</button>
+
+    <div class="content">
+      <p class="eyebrow" data-i18n="eyebrow">Option AI Signals</p>
+
+      <h1>
+        <span data-i18n="hero.join">Join</span>
+        <span class="counter-wrap">
+          <span id="counter">000000</span>
+          <span class="plus">+</span>
+        </span>
+        <span data-i18n="hero.tail">Traders and Start<br>Achieving Financial Freedom<br>Today!</span>
+      </h1>
+
+      <p class="lead" data-i18n="lead">Free trading signals — daily. Access to the #1 trading community. Expert guidance, no experience needed.</p>
+      <ul>
+        <li data-i18n="benefits.alerts">Real-time signal alerts</li>
+        <li data-i18n="benefits.guides">Beginner-friendly guides</li>
+        <li data-i18n="benefits.support">Active support team</li>
+      </ul>
+      <a class="cta" id="ctaLink" href="https://t.me/Gassersaad1" target="_blank" rel="noopener" data-i18n="cta">START EARNING TODAY — JOIN FREE</a>
+      <div class="sub" data-i18n="sub">100% free — Telegram group</div>
+
+      <p class="legal" id="legalText">
+        <strong data-i18n="legal.attn_label">Attention:</strong>
+        <span data-i18n="legal.body">
+          We do not sell products on this website. This site isn’t affiliated with Facebook or any Meta property.
+          Once you leave Facebook, you are interacting with our website. We aim to show real results; nothing here should be taken as a guarantee
+          of earnings. Testimonials reflect real experiences from community members; your results will vary with your own effort, dedication, and commitment.
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#" data-i18n="footer.privacy">PRIVACY POLICY</a>
+      <a href="#" data-i18n="footer.terms">TERMS OF USE</a>
+    </div>
+    <p data-i18n="footer.copy">© 2025 Option AI Signals. All rights reserved.</p>
+  </footer>
+
+  <!-- i18n dictionaries (inline, tiny) -->
+  <script>
+    window.I18N_EN = {
+      "eyebrow": "Option AI Signals",
+      "hero": {
+        "join": "Join",
+        "tail": "Traders and Start\\nAchieving Financial Freedom\\nToday!"
+      },
+      "lead": "Free trading signals — daily. Access to the #1 trading community. Expert guidance, no experience needed.",
+      "benefits": {
+        "alerts": "Real-time signal alerts",
+        "guides": "Beginner-friendly guides",
+        "support": "Active support team"
+      },
+      "cta": "START EARNING TODAY — JOIN FREE",
+      "sub": "100% free — Telegram group",
+      "legal": {
+        "attn_label": "Attention:",
+        "body": "We do not sell products on this website. This site isn’t affiliated with Facebook or any Meta property. Once you leave Facebook, you are interacting with our website. We aim to show real results; nothing here should be taken as a guarantee of earnings. Testimonials reflect real experiences from community members; your results will vary with your own effort, dedication, and commitment."
+      },
+      "footer": {
+        "privacy": "PRIVACY POLICY",
+        "terms": "TERMS OF USE",
+        "copy": "© 2025 Option AI Signals. All rights reserved."
+      }
+    };
+
+    window.I18N_AR = {
+      "eyebrow": "إشارات أوبشن بالذكاء الاصطناعي",
+      "hero": {
+        "join": "انضم إلى",
+        "tail": "متداولين وابدأ\\nرحلة الحرية المالية\\nاليوم!"
+      },
+      "lead": "إشارات تداول مجانية يوميًا — وصول لأكبر مجتمع محترف، وإرشاد عملي بدون خبرة سابقة.",
+      "benefits": {
+        "alerts": "تنبيهات لحظية للإشارات",
+        "guides": "شروحات مبسطة للمبتدئين",
+        "support": "فريق دعم نشط"
+      },
+      "cta": "ابدأ الربح الآن — انضم مجانًا",
+      "sub": "مجموعة تيليجرام — مجانًا 100%",
+      "legal": {
+        "attn_label": "تنبيه:",
+        "body": "لا نبيع أي منتجات عبر هذا الموقع. هذا الموقع غير تابع لفيسبوك أو أي من شركات ميتا. بمجرد مغادرتك لفيسبوك فأنت تتعامل مباشرةً مع موقعنا. هدفنا عرض نتائج حقيقية، ولا يجب اعتبار أي شيء هنا ضمانًا للأرباح. التجارب المعروضة تعكس آراء وتجارب أفراد من المجتمع، وقد تختلف نتائجك حسب جهدك والتزامك."
+      },
+      "footer": {
+        "privacy": "سياسة الخصوصية",
+        "terms": "شروط الاستخدام",
+        "copy": "© 2025 إشارات Option AI. جميع الحقوق محفوظة."
+      }
+    };
+  </script>
+
+  <!-- i18n core (vanilla, minimal; non-breaking) -->
+  <script>
+    (function(){
+      const RTL = new Set(['ar','fa','ur','he']);
+      const dicts = { en: window.I18N_EN, ar: window.I18N_AR };
+let current = localStorage.getItem('lang') || 'en';
+
+      function t(key){
+        const parts = key.split('.');
+        let cur = dicts[current];
+        for (const p of parts) {
+          if (cur == null) return key;
+          cur = cur[p];
+        }
+        return (cur ?? key);
+      }
+
+      function apply(){
+        try { const s = document.querySelector('.lang-toggle .lang-abbrev'); const cur = (current || 'en'); if (s) s.textContent = (cur === 'ar') ? 'AR' : 'EN'; document.querySelector('.lang-toggle')?.setAttribute('title', (cur === 'ar' ? 'AR' : 'EN') + ' ⇄ ' + (cur === 'ar' ? 'EN' : 'AR')); } catch(e) {}
+
+        // direction + lang
+        const isRTL = RTL.has(current);
+        document.documentElement.lang = current;
+        document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+        document.body.classList.toggle('rtl', isRTL);
+
+        // font swap
+        const root = document.documentElement;
+root.style.setProperty('--app-font', isRTL ? "Almarai, system-ui, sans-serif" : "BBH Sans Bartle, system-ui, sans-serif");
+
+        // textual nodes
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          let val = t(key);
+          // allow \n for line breaks in H1 tail
+          if (val && val.indexOf('\\n') !== -1) {
+            el.innerHTML = val.split('\\n').join('<br>');
+          } else {
+            el.textContent = val;
+          }
+        });
+
+        // switcher UI
+        document.querySelectorAll('.lang-switch button').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.setlang === current);
+        });
+
+        // locale-specific number format for final value
+        const finalEl = document.getElementById('counter');
+        if (finalEl && finalEl.dataset.final) {
+          const num = Number(finalEl.dataset.final);
+          try {
+            finalEl.textContent = new Intl.NumberFormat(current).format(num);
+          } catch {
+            finalEl.textContent = num.toLocaleString();
+          }
+        }
+      }
+
+      function setLang(lang){
+        if (!dicts[lang]) return;
+        current = lang;
+        localStorage.setItem('lang', lang);
+        apply();
+      }
+
+      // Attach events
+      document.addEventListener('click', (e) => {
+        const tgl = e.target.closest('.lang-toggle');
+        if (tgl) {
+          const current = document.documentElement.lang || 'en';
+          const next = (current === 'ar') ? 'en' : 'ar';
+          setLang(next);
+          const s = document.querySelector('.lang-toggle .lang-abbrev');
+          if (s) s.textContent = (next === 'ar') ? 'AR' : 'EN';
+          document.querySelector('.lang-toggle')?.setAttribute('title', (next === 'ar' ? 'AR' : 'EN') + ' ⇄ ' + (next === 'ar' ? 'EN' : 'AR'));
+          return;
+        }
+
+        const btn = e.target.closest('[data-setlang]');
+        if (btn) setLang(btn.getAttribute('data-setlang'));
+      });
+
+      // expose (debug)
+      window.__i18nSet = setLang;
+
+      // initial
+      apply();
+    })();
+  </script>
+
+  <!-- Original counter script with locale-aware finishing format (non-breaking) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const counter  = document.getElementById("counter");
+      const wrapper  = document.querySelector(".counter-wrap");
+      const duration = 2000;          // 2 ثواني
+      const finalVal = 140000;
+      const digits   = String(finalVal).length; // 6 خانات
+
+      // store final to reformat on language change
+      counter.dataset.final = String(finalVal);
+
+      // ثبّت عرض الحاوية بدقة: عدد الخانات + خانة للـ +
+      wrapper.style.minWidth = (digits + 1) + "ch";
+
+      // ابدأ الوميض أثناء العد
+      counter.classList.add("counting");
+
+      const start = performance.now();
+      function animate(now){
+        const t = Math.min((now - start) / duration, 1);
+        const current = Math.floor(finalVal * t);
+
+        // أثناء الحركة: حافظ على عدد الخانات (من غير فواصل) لتجنب الرعشة
+        counter.textContent = String(current).padStart(digits, "0");
+
+        if (t < 1){
+          requestAnimationFrame(animate);
+        } else {
+          // نهاية: صيغة حسب اللغة الحالية
+          counter.classList.remove("counting");
+          try {
+            const lang = document.documentElement.lang || 'en';
+            counter.textContent = new Intl.NumberFormat(lang).format(finalVal);
+          } catch {
+            counter.textContent = finalVal.toLocaleString();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    });
+  </script>
+</body>
+</html>
