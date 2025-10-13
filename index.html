@@ -122,31 +122,41 @@ body { font-weight: 700; } /* خليها برّه :root */
     }
 
     .cta{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 22px;
-      border-radius:10px;
-      text-decoration:none;
-      background:linear-gradient(180deg,var(--neon),#20d85a);
-      color:#06140a;
-      font-weight:900;
-      font-size:15px;
-      box-shadow:0 16px 54px var(--ring);
-      overflow:hidden;
-      isolation:isolate;
-    }
-    .cta::after{
-      content:"";
-      position:absolute;
-      top:0; left:-35%;
-      width:20%; height:100%;
-      background:linear-gradient(90deg,transparent,#ffffff88,transparent);
-      animation:shine 2.8s linear infinite;
-      pointer-events:none;
-    }
-    @keyframes shine{to{transform:translateX(250%)}}
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 22px;
+  border-radius:10px;
+  text-decoration:none;
+  background:linear-gradient(180deg,var(--neon),#20d85a);
+  color:#06140a;
+  font-weight:900;
+  font-size:15px;
+  box-shadow:0 16px 54px var(--ring);
+  overflow:hidden;
+  isolation:isolate;
+}
+
+    /* وميض يعدّي من أول الزر لآخره */
+.cta::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:36%;
+  pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform:translateX(-120%);          /* يبدأ قبل الزر */
+  animation:shineWide 6.8s linear infinite;
+}
+
+/* يتحرك من برّه الشمال لبرّه اليمين */
+@keyframes shineWide{
+  to { transform: translateX(320%); }   /* يعدّي الطرف بالكامل */
+}
+
 
     .sub{
       margin-top:.6rem;
@@ -262,6 +272,82 @@ body { font-weight: 700; } /* خليها برّه :root */
     .lang-toggle:active{ transform:scale(.98); }
     .lang-toggle img{ width:18px; height:18px; display:block; }
     .lang-toggle .lang-abbrev{ letter-spacing:.08em; }
+/* Micro-interactions for CTA */
+.cta{
+  will-change: transform, box-shadow;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+
+.cta:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 22px 64px var(--ring);
+}
+
+.cta:active{
+  transform: translateY(1px) scale(.985);
+}
+
+/* Ripple circle */
+.cta .ripple{
+  position: absolute;
+  width: 10px; height: 10px;
+  left: 0; top: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.45);
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: ripple .6s ease-out forwards;
+}
+@keyframes ripple{
+  to{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(18);
+  }
+}
+
+/* Tiny toast */
+#toast{
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(10,15,20,.92);
+  color: #eaf1fb;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 9999;
+}
+#toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* نبض مستمر للزر */
+.cta {
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+/* تأثير النبضة */
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(39, 255, 106, 0.25), 0 0 0 rgba(39, 255, 106, 0.15);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(39, 255, 106, 0.45), 0 0 20px rgba(39, 255, 106, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(39, 255, 106, 0.25), 0 0 0 rgba(39, 255, 106, 0.15);
+  }
+}
 
   </style>
 </head>
@@ -500,5 +586,48 @@ root.style.setProperty('--app-font', isRTL ? "Almarai, system-ui, sans-serif" : 
       requestAnimationFrame(animate);
     });
   </script>
+  <!-- Micro-interactions for CTA: ripple + toast -->
+<script>
+(function(){
+  // Toast helper
+  function showToast(msg){
+    let t = document.getElementById('toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'toast';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._hidetimer);
+    t._hidetimer = setTimeout(()=> t.classList.remove('show'), 1400);
+  }
+
+  // Attach ripple on click
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('.cta');
+    if(!btn) return;
+
+    // RIPPLE
+    const rect = btn.getBoundingClientRect();
+    const x = (e.clientX ?? (rect.left + rect.width/2)) - rect.left;
+    const y = (e.clientY ?? (rect.top + rect.height/2)) - rect.top;
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    r.style.left = x + 'px';
+    r.style.top  = y + 'px';
+    btn.appendChild(r);
+    r.addEventListener('animationend', ()=> r.remove());
+
+    // TOAST (localized)
+    const lang = document.documentElement.lang || 'en';
+    const msg  = (lang === 'ar')
+      ? 'جارٍ فتح المجموعة في تبويب جديد'
+      : 'Opening in a new tab';
+    showToast(msg);
+  }, false);
+})();
+</script>
+
 </body>
 </html>
