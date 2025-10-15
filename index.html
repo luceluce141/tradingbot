@@ -7,6 +7,8 @@
   <title>Option AI Signals — Start Earning Today</title>
   <!-- English + Arabic fonts -->
 <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle:wght@700&family=Almarai:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
   --neon:#27ff6a;
@@ -74,15 +76,15 @@ body { font-weight: 700; } /* خليها برّه :root */
     }
 
     /* ======= COUNTER: ثابت العرض + tabular-nums يمنع الرعشة ======= */
-    .counter-wrap{
-      display:inline-block;
-      min-width:7ch;             /* يتظبط نهائياً من السكريبت حسب الخانات */
-      text-align:right;
-      white-space:nowrap;
-      vertical-align:baseline;
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum" 1, "liga" 0;
-    }
+    #counter {
+  display:inline-block;
+  font-family: 'Tajawal', system-ui, sans-serif;
+  font-weight: 900;
+  width: 7ch;
+  text-align: center;
+}
+
+
     #counter{
       color:var(--neon);
       font-weight:900;
@@ -378,7 +380,7 @@ body { font-weight: 700; } /* خليها برّه :root */
         <li data-i18n="benefits.guides">Beginner-friendly guides</li>
         <li data-i18n="benefits.support">Active support team</li>
       </ul>
-      <a class="cta" id="ctaLink" href="https://t.me/Gassersaad1" target="_blank" rel="noopener" data-i18n="cta">START EARNING TODAY — JOIN FREE</a>
+      <a class="cta" id="ctaLink" href="https://t.me/tradingbotaisignal" target="_blank" rel="noopener" data-i18n="cta">START EARNING TODAY — JOIN FREE</a>
       <div class="sub" data-i18n="sub">100% free — Telegram group</div>
 
       <p class="legal" id="legalText">
@@ -458,7 +460,7 @@ body { font-weight: 700; } /* خليها برّه :root */
     (function(){
       const RTL = new Set(['ar','fa','ur','he']);
       const dicts = { en: window.I18N_EN, ar: window.I18N_AR };
-let current = localStorage.getItem('lang') || 'en';
+let current = localStorage.getItem('lang') || 'ar';
 
       function t(key){
         const parts = key.split('.');
@@ -481,7 +483,7 @@ let current = localStorage.getItem('lang') || 'en';
 
         // font swap
         const root = document.documentElement;
-root.style.setProperty('--app-font', isRTL ? "Almarai, system-ui, sans-serif" : "BBH Sans Bartle, system-ui, sans-serif");
+root.style.setProperty('--app-font', isRTL ? "Tajawal, system-ui, sans-serif" : "BBH Sans Bartle, system-ui, sans-serif");
 
         // textual nodes
         document.querySelectorAll('[data-i18n]').forEach(el => {
